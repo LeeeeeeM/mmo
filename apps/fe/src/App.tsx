@@ -9,8 +9,8 @@ const router = createBrowserRouter([
     element: (
       <>
         <h1>login</h1>
-        <Link to={"register"}>register</Link>
         <Login />
+        <Link to={"register"}>register</Link>
       </>
     ),
   },
@@ -19,8 +19,8 @@ const router = createBrowserRouter([
     element: (
       <>
         <h1>register</h1>
-        <Link to={"/"}>login</Link>
         <Register />
+        <Link to={"/"}>login</Link>
       </>
     ),
   },

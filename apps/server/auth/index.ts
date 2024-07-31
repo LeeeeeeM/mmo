@@ -9,12 +9,8 @@ import { v4 as uuidv4 } from "uuid";
 import Crypt from "node-jsencrypt";
 import * as grpc from "@grpc/grpc-js";
 
-import {
-  AuthService,
-  CheckTokenRes,
-  CheckTokenResData,
-  PrivateKey,
-} from "@mmo/common";
+import { PrivateKey } from "@mmo/common";
+import { AuthService, CheckTokenRes, CheckTokenResData } from "@mmo/common/idl";
 import { queryPromise } from "../utils/query";
 
 const cache = new Map();
@@ -43,7 +39,6 @@ app.get("/", function (req, res) {
 app.post("/register", async (req, res) => {
   try {
     console.log(req.body);
-
     let { account, password } = req.body;
 
     account = crypt.decrypt(account);
@@ -79,7 +74,6 @@ app.post("/register", async (req, res) => {
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });
   }
-
 });
 
 app.post("/login", async (req, res) => {

@@ -1,7 +1,7 @@
-import { Singleton } from "../common/base.js";
-import { getProtoPathByRpcFunc, RpcFunc, ProtoPathEnum, ServerPort } from "../common.js";
+import { Singleton } from "@mmo/common";
+import { getProtoPathByRpcFunc, RpcFunc } from "@mmo/common";
 // @ts-ignore
-import protoRoot from "../proto/index.js";
+import protoRoot from "@mmo/common/idl/auto-gen-ws";
 
 const TIMEOUT = 5000;
 
@@ -17,8 +17,8 @@ export default class NetworkManager extends Singleton {
     return super.GetInstance<NetworkManager>();
   }
 
-  ws: WebSocket;
-  port = ServerPort.Gateway;
+  ws!: WebSocket;
+  port = 4000;
   maps: Map<RpcFunc, Array<IItem>> = new Map();
   isConnected = false;
 
@@ -51,12 +51,18 @@ export default class NetworkManager extends Singleton {
 
       this.ws.onmessage = (e) => {
         try {
-          // TODO解析data和name
-          const data = e.data;
-          const name = 1;
+          /** 解包二进制数组，格式是[name,...data] */
+          // 转TypeArray方便操作
+          const ta = new Uint8Array(e.data);
+          // 获取name（RpcFunc是数字类型，不需要解码处理）
+          const name = ta[0] as RpcFunc;
+          // 根据name生成对应的编码器并解码出数据data
+          const path = getProtoPathByRpcFunc(name, "res");
+          const coder = protoRoot.lookup(path);
+          const data = coder.decode(ta.slice(1));
           try {
-            if (this.maps.has(name) && this.maps.get(name).length) {
-              this.maps.get(name).forEach(({ cb, ctx }) => cb.call(ctx, data));
+            if (this.maps.has(name) && this.maps.get(name)!.length) {
+              this.maps.get(name)!.forEach(({ cb, ctx }) => cb.call(ctx, data));
             } else {
               console.log(`no ${name} message or callback, maybe timeout`);
             }
@@ -70,6 +76,11 @@ export default class NetworkManager extends Singleton {
     });
   }
 
+  close() {
+    this.ws.close();
+    this.isConnected = false;
+  }
+
   call(name: RpcFunc, data: IData) {
     return new Promise<{ data?: any; error?: string }>((resolve) => {
       try {
@@ -80,7 +91,7 @@ export default class NetworkManager extends Singleton {
         }, TIMEOUT);
 
         // 回调处理
-        const cb = (res) => {
+        const cb = (res: any) => {
           resolve(res);
           clearTimeout(timer);
           this.unListen(name, cb, null);
@@ -92,18 +103,31 @@ export default class NetworkManager extends Singleton {
         // 发送消息
         this.send(name, data);
       } catch (error) {
-        resolve({ error });
+        resolve({ error: 'has error' });
       }
     });
   }
 
   async send(name: RpcFunc, data: IData) {
-    // TODO
+    // 根据name生成对应的编码器并编码生成TypeArray
+    const path = getProtoPathByRpcFunc(name, "req");
+    const coder = protoRoot.lookup(path);
+    const ta = coder.encode(data).finish();
+
+    /** 封包二进制数组，格式是[name,...data] */
+    const ab = new ArrayBuffer(ta.length + 1);
+    const view = new DataView(ab);
+    let index = 0;
+    view.setUint8(index++, name);
+    for (let i = 0; i < ta.length; i++) {
+      view.setUint8(index++, ta[i]);
+    }
+    this.ws.send(view.buffer);
   }
 
   listen(name: RpcFunc, cb: (args: any) => void, ctx: unknown) {
     if (this.maps.has(name)) {
-      this.maps.get(name).push({ ctx, cb });
+      this.maps.get(name)!.push({ ctx, cb });
     } else {
       this.maps.set(name, [{ ctx, cb }]);
     }
@@ -111,7 +135,7 @@ export default class NetworkManager extends Singleton {
 
   unListen(name: RpcFunc, cb: (args: any) => void, ctx: unknown) {
     if (this.maps.has(name)) {
-      const items = this.maps.get(name);
+      const items = this.maps.get(name)!;
       const index = items.findIndex((i) => cb === i.cb && i.ctx === ctx);
       index > -1 && items.splice(index, 1);
     }

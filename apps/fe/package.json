@@ -1,6 +1,7 @@
 {
   "name": "@mmo/fe",
-  "version": "1.0.0",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -8,6 +9,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "antd": "^5.19.3",
     "react": "^18.3.1",

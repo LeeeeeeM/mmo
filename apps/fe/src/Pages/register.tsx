@@ -3,7 +3,7 @@ import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd";
 import JSCrypto from "jsencrypt";
 
-import { PublicKey } from "@mmo/common/private";
+import { PublicKey } from "@mmo/common";
 
 const crypt = new JSCrypto();
 crypt.setKey(PublicKey);

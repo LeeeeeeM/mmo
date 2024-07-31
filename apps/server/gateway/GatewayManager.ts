@@ -1,9 +1,5 @@
-import {
-  AuthClient,
-  CheckTokenReq,
-  RpcFunc,
-  getProtoPathByRpcFunc
-} from "@mmo/common";
+import { RpcFunc, getProtoPathByRpcFunc } from "@mmo/common";
+import { AuthClient, CheckTokenReq } from "@mmo/common/idl";
 import * as grpc from "@grpc/grpc-js";
 import WebSocket, { WebSocketServer } from "ws";
 

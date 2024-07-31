@@ -1,4 +1,4 @@
-import { Singleton } from "../common/base";
+import { Singleton } from "@mmo/common";
 import { EventEnum } from "../enum";
 
 interface IItem {

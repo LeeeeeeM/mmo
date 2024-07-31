@@ -3,7 +3,7 @@ import type { FormProps } from "antd";
 import { Button, Checkbox, Form, Input } from "antd";
 import JSCrypto from "jsencrypt";
 
-import { PublicKey, RpcFunc } from "@mmo/common/private";
+import { PublicKey, RpcFunc } from "@mmo/common";
 import NetworkManager from "../scripts/global/NetworkManager";
 
 const crypt = new JSCrypto();

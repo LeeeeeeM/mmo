@@ -1,19 +1,15 @@
 {
   "name": "@mmo/server",
   "version": "1.0.0",
-  "description": "",
+  "description": "mmo server",
   "main": "src/index.ts",
   "scripts": {
-    "gen-grpc": "mkdirp ./common/idl/auto-gen-grpc && cd common/idl/grpc && grpc_tools_node_protoc --js_out=import_style=commonjs,binary:../auto-gen-grpc --grpc_out=grpc_js:../auto-gen-grpc --ts_out=grpc_js:../auto-gen-grpc ./*.proto",
-    "gen-ws": "mkdirp ./common/idl/auto-gen-ws && pbjs -t json-module -w es6 -o ./common/idl/auto-gen-ws/index.js ./common/idl/ws/*.proto",
-    "gen-link": "ts-node ./common/idl/link.ts",
     "auth": "ts-node ./auth/index.ts",
     "game": "ts-node ./game/index.ts",
     "gateway": "ts-node ./gateway/index.ts",
     "scene": "ts-node ./scene/index.ts",
     "replication": "ts-node ./replication/index.ts",
-    "common": "yarn gen-grpc && yarn gen-ws && yarn gen-link",
-    "start": "yarn common && concurrently \"yarn game\" \"yarn replication\" \"yarn scene\" \"yarn gateway\" \"yarn auth\""
+    "start": "concurrently \"yarn game\" \"yarn replication\" \"yarn scene\" \"yarn gateway\" \"yarn auth\""
   },
   "keywords": [],
   "author": "",

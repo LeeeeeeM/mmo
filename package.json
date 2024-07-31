@@ -5,12 +5,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "common": "yarn workspace @mmo/server common",
+    "common": "yarn workspace @mmo/common common",
     "start": "yarn workspace @mmo/server start"
   },
   "workspaces": [
     "apps/client",
-    "apps/server"
+    "apps/server",
+    "apps/common",
+    "apps/fe"
   ],
   "keywords": [],
   "author": "",

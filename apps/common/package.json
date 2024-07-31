@@ -1,0 +1,25 @@
+{
+  "name": "@mmo/common",
+  "version": "1.0.0",
+  "description": "mmo common",
+  "main": "index.ts",
+  "scripts": {
+    "gen-grpc": "mkdirp ./idl/auto-gen-grpc && cd idl/grpc && grpc_tools_node_protoc --js_out=import_style=commonjs,binary:../auto-gen-grpc --grpc_out=grpc_js:../auto-gen-grpc --ts_out=grpc_js:../auto-gen-grpc ./*.proto",
+    "gen-ws": "mkdirp ./idl/auto-gen-ws && pbjs -t json-module -w es6 -o ./idl/auto-gen-ws/index.js ./idl/ws/*.proto",
+    "common": "yarn gen-grpc && yarn gen-ws"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^11.1.1",
+    "grpc-tools": "~1.11.3",
+    "grpc_tools_node_protoc_ts": "^5.3.3",
+    "mkdirp": "^3.0.0",
+    "mysql": "^2.18.1",
+    "protobufjs-cli": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.1"
+  }
+}

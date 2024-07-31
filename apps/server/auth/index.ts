@@ -14,7 +14,7 @@ import {
   CheckTokenRes,
   CheckTokenResData,
   PrivateKey,
-} from "../common";
+} from "@mmo/common";
 import { queryPromise } from "../utils/query";
 
 const cache = new Map();

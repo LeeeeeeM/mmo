@@ -1,7 +1,6 @@
 {
-  "name": "mmo-front",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@mmo/fe",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

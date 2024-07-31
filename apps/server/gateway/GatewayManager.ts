@@ -2,12 +2,14 @@ import {
   AuthClient,
   CheckTokenReq,
   RpcFunc,
-  getProtoPathByRpcFunc,
-} from "../common";
+  getProtoPathByRpcFunc
+} from "@mmo/common";
 import * as grpc from "@grpc/grpc-js";
-import { Singleton } from "../common/common/base";
 import WebSocket, { WebSocketServer } from "ws";
-import root from "../common/idl/auto-gen-ws";
+
+import { Singleton } from "@mmo/common/common/base";
+// @ts-ignore
+import root from "@mmo/common/idl/auto-gen-ws";
 
 export class GatewayManager extends Singleton {
   static get Instance() {

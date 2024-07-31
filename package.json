@@ -7,7 +7,8 @@
   "scripts": {
     "common": "yarn workspace @mmo/common common",
     "start": "yarn workspace @mmo/server start",
-    "dev": "yarn workspace @mmo/fe dev"
+    "dev": "yarn workspace @mmo/fe dev",
+    "clean": "yarn workspaces foreach -A -p run clean"
   },
   "workspaces": [
     "apps/client",
@@ -24,17 +25,17 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.7",
-    "eslint": "^8.26.0",
     "@grpc/grpc-js": "^1.8.14",
     "@grpc/proto-loader": "^0.7.6",
     "@types/mysql": "^2.15.21",
+    "@types/node": "^18.11.7",
     "@types/sqlstring": "^2.3.0",
     "chalk": "^4.1.2",
     "concurrently": "^8.0.1",
+    "eslint": "^8.26.0",
+    "google-protobuf": "^3.21.2",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4",
-    "google-protobuf": "^3.21.2"
+    "typescript": "^5.0.4"
   }
 }

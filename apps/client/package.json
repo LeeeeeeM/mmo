@@ -4,5 +4,11 @@
   "version": "3.7.0",
   "creator": {
     "version": "3.7.0"
+  },
+  "scripts": {
+    "clean": "rimraf node_modules"
+  },
+  "devDependencies": {
+    "rimraf": "6.0.1"
   }
 }

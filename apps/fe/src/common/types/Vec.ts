@@ -38,7 +38,7 @@ export class Vec {
     normalize(): Vec {
       const len = this.length();
       if (len === 0) {
-        throw 0;
+        return Vec.ZERO;
       }
       return this.scale(1 / len);
     }

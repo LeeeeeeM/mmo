@@ -37,7 +37,7 @@ const Play: React.FC = () => {
     <div>
       <Canvas width={600} height={400} callback={updateDt} ref={canvasRef}>
         {actors.map((actor) => (
-          <Actor {...actor} key={actor.id}/>
+          <Actor {...actor} key={actor.id} />
         ))}
       </Canvas>
       <JoyStick boxRadius={50} stickRadius={20} callback={getInput} />

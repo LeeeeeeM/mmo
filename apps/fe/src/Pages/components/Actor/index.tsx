@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { IActor } from "../../../common/types";
 
 import styles from "./index.module.less";
+import ActorManager from "../../../common/Manager/ActorManager";
 
 const Actor: React.FC<IActor> = (props) => {
   const { position: { x: posX, y: posY }, direction: { x: dirX, y: dirY } } = props;
 
+  const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (divRef.current) {
+      ActorManager.Instance.init(divRef.current);
+    }
+  }, []);
+
   return (
     <div
       className={styles["actor"]}
+      ref={divRef}
       style={{
         width: `50px`,
         height: `50px`,

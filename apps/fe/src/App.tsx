@@ -1,26 +1,42 @@
+import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./Pages/login";
 import Register from "./Pages/register";
-import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
+import Play from "./Pages/Scene/play";
 import "./App.css";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/login",
     element: (
       <>
         <h1>login</h1>
         <Login />
-        <Link to={"register"}>register</Link>
+        <div className="footer">
+          <Link to={"/register"}>register</Link>
+          <Link to={"/play"}>play</Link>
+        </div>
       </>
     ),
   },
   {
-    path: "register",
+    path: "/register",
     element: (
       <>
         <h1>register</h1>
         <Register />
-        <Link to={"/"}>login</Link>
+        <div className="footer">
+          <Link to={"/login"}>login</Link>
+          <Link to={"/play"}>play</Link>
+        </div>
+      </>
+    ),
+  },
+  {
+    path: "/",
+    element: (
+      <>
+        <h1>play</h1>
+        <Play />
       </>
     ),
   },
